@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vincce.businesstrip.web.core.mapper.TripMapper">
+
+	<select id="getById" parameterType="Integer" resultType="Trip">
+		SELECT * FROM trip WHERE id=#{id} AND deleted=FALSE
+	</select>
+
+	<select id="listAll" resultType="Trip" parameterType="Trip">
+		SELECT * FROM trip
+		WHERE
+			deleted=FALSE
+		<if test="destination != null">
+			AND destination LIKE "%"#{destination}"%"
+		</if>
+		<if test="startDate != null">
+			AND startDate = #{startDate}
+		</if>
+		<if test="employee != null">
+			AND employee LIKE "%"#{employee}"%"
+		</if>
+		<if test="companyId != null">
+			AND companyId = #{companyId}
+		</if>
+	</select>
+
+	<update id="deleteById" parameterType="Integer">
+		UPDATE trip SET deleted=TRUE WHERE id=#{id}
+	</update>
+
+	<insert id="insert" parameterType="Trip">
+		INSERT INTO trip (number, name, employee, companyId, department, mobile, dateRange, startDate, endDate, duration, destination, reason, adminId, deleted)
+		VALUES (#{number}, #{name}, #{employee}, #{companyId}, #{department}, #{mobile}, #{dateRange}, #{startDate}, #{endDate}, #{duration}, #{destination}, #{reason}, #{adminId}, false)
+	</insert>
+
+	<update id="update" parameterType="Trip">
+		UPDATE trip SET
+			number = #{number},
+			name = #{name},
+			employee = #{employee},
+			companyId = #{companyId},
+			department = #{department},
+			mobile = #{mobile},
+			dateRange = #{dateRange},
+			startDate = #{startDate},
+			endDate = #{endDate},
+			duration = #{duration},
+			destination = #{destination},
+			reason = #{reason}
+		WHERE id=#{id}
+	</update>
+
+</mapper>

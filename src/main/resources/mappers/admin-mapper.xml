@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vincce.businesstrip.web.core.mapper.AdminMapper">
+
+	<select id="getByUsername" parameterType="String" resultType="Admin">
+		SELECT * FROM admin WHERE username=#{username} AND deleted=FALSE
+	</select>
+
+	<select id="getById" parameterType="Integer" resultType="Admin">
+		SELECT * FROM admin WHERE id=#{id} AND deleted=FALSE
+	</select>
+
+	<select id="countByCompanyId" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM admin WHERE companyId=#{companyId} AND deleted=FALSE
+	</select>
+
+	<select id="listAll" resultType="Admin">
+		SELECT * FROM admin WHERE deleted=FALSE
+	</select>
+
+	<update id="deleteById" parameterType="Integer">
+		UPDATE admin SET deleted=TRUE WHERE id=#{id}
+	</update>
+
+	<insert id="insert" parameterType="Admin">
+		INSERT INTO admin (username, password, name, companyId, department, mobile, roleId, deleted)
+		VALUES (#{username}, #{password}, #{name}, #{companyId}, #{department}, #{mobile}, 2, FALSE )
+	</insert>
+
+	<update id="update" parameterType="Admin">
+		UPDATE admin SET username=#{username}, password=#{password}, name=#{name}, companyId=#{companyId}, department=#{department}, mobile=#{mobile} WHERE id=#{id}
+	</update>
+
+</mapper>

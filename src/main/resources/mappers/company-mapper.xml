@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vincce.businesstrip.web.core.mapper.CompanyMapper">
+
+	<select id="getById" parameterType="Integer" resultType="Company">
+		SELECT * FROM company WHERE id=#{id} AND deleted=FALSE
+	</select>
+
+	<select id="listAll" resultType="Company">
+		SELECT * FROM company WHERE deleted=FALSE
+	</select>
+
+	<update id="deleteById" parameterType="Integer">
+		UPDATE company SET deleted=TRUE WHERE id=#{id}
+	</update>
+
+	<insert id="insert" parameterType="Company">
+		INSERT INTO company (name, address, hq, deleted)
+				VALUES (#{name}, #{address}, FALSE , FALSE )
+	</insert>
+
+	<update id="update" parameterType="Company">
+		UPDATE company SET name=#{name}, address=#{address} WHERE id=#{id}
+	</update>
+
+</mapper>
